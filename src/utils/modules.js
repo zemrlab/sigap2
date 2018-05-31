@@ -14,8 +14,8 @@ export default {
   },
 
   disponibilidad: {
-    name: 'Preferencia Disponibilidad',
-    url: 'http://sistemas.unmsm.edu.pe/',
+    name: 'Disponibilidad Docente',
+    url: 'http://disponibdocente.herokuapp.com/',
     allowedRoles: [roles.PROFESSOR, roles.ADMIN]
   },
 

@@ -46,7 +46,6 @@ const Layout = ({logout, currentUser}) => {
                         href={allowed ? module.url : ''}
                         header={module.name}
                         meta={allowed ? 'Disponible' : 'No Disponible'}
-                        description='Un módulo'
                         style={allowed ? {} : {cursor: 'not-allowed'}}
                       />
                   </Grid.Column>
