@@ -8,7 +8,7 @@ export default {
   },
 
   recaudaciones: {
-    name: 'Recaudaciones',
+    name: 'Carga de Recaudaciones',
     url: 'http://modulodecarga.herokuapp.com/',
     allowedRoles: [roles.ADMIN]
   },
@@ -32,8 +32,15 @@ export default {
   },
 
   controlRecibos: {
-    name: 'Control Recibos',
+    name: 'Control de Recibos',
     url: 'https://modulo-control-recibos.herokuapp.com',
     allowedRoles: [roles.ADMIN]
-  }  
+  },
+
+  estadoPagos: {
+    name: 'Estado de Pagos',
+    url: 'http://modulo-alumno-ui.herokuapp.com',
+    allowedRoles: [roles.ADMIN]
+  },
+  
 };
