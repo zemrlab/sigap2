@@ -1,22 +1,18 @@
 import React from 'react';
-import { 
-  Container, 
-  Divider, 
-  Dropdown, 
-  Grid, 
-  Header, 
-  Image, 
-  List, 
-  Menu, 
-  Segment 
-} from 'semantic-ui-react';
+import { Container, Grid, Image, Menu, Segment, Card } from 'semantic-ui-react';
+import _ from 'lodash';
+import m from 'moment';
 
 import logo from '../assets/images/logo-256.png';
 import { AuthConsumer } from '../contexts/AuthContext';
+import modules from '../utils/modules';
 
-const Layout = () => (
-  <AuthConsumer>
-    {({logout}) => (<div>
+const Layout = ({logout, currentUser}) => {
+  const colNumber = 3;
+  const moduleChunks = _.chunk(_.values(modules), colNumber);
+
+  return (
+    <div>
       <Menu fixed='top' inverted>
         <Container>
           <Menu.Item as='a' header>
@@ -28,14 +24,37 @@ const Layout = () => (
             SIGA
           </Menu.Item>
           <Menu.Item as='a'>Inicio</Menu.Item>
-          <Menu.Item as='a' position="right" onClick={logout}>Cerrar sesión</Menu.Item>
+          <Menu.Item position="right">
+            <span style={{fontWeight: 'bold'}}>Usuario:&nbsp;</span>{currentUser.name}
+          </Menu.Item>
+          <Menu.Item>
+            <span style={{fontWeight: 'bold'}}>Fecha:&nbsp;</span>{m().format('DD-MM-YYYY')}
+          </Menu.Item>
+          <Menu.Item as='a' onClick={logout}>Cerrar Sesión</Menu.Item>
         </Container>
       </Menu>
 
       <Container text style={{ marginTop: '7em' }}>
-        <Header as='h1'>Semantic UI React Fixed Template</Header>
-        <p>This is a basic fixed menu template using fixed size containers.</p>
-        <p>A text container is used for the main container, which is useful for single column layouts.</p>
+        <Grid>
+          {moduleChunks.map((moduleChunk, i) => (
+            <Grid.Row columns={colNumber} key={i}>
+              {moduleChunk.map((module, j) => {
+                const allowed = module.allowedRoles.includes(currentUser.role);
+                return (
+                  <Grid.Column key={j}>
+                      <Card
+                        href={allowed ? module.url : ''}
+                        header={module.name}
+                        meta={allowed ? 'Disponible' : 'No Disponible'}
+                        description='Un módulo'
+                        style={allowed ? {} : {cursor: 'not-allowed'}}
+                      />
+                  </Grid.Column>
+                )
+              })}
+            </Grid.Row>
+          ))}
+        </Grid>
       </Container>
 
       <Segment
@@ -51,8 +70,12 @@ const Layout = () => (
           />
         </Container>
       </Segment>
-    </div>)}
-  </AuthConsumer>
-)
+    </div>
+  );
+};
 
-export default Layout;
+export default props => (
+  <AuthConsumer>
+    {({logout, currentUser}) => <Layout {...props} logout={logout} currentUser={currentUser}/>}
+  </AuthConsumer>
+);

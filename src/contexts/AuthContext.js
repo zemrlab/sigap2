@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { loadState, saveState, removeState } from '../utils/localStorage';
+import roles from '../utils/roles';
 
 const AuthContext = React.createContext();
 
@@ -17,7 +18,7 @@ class AuthProvider extends React.Component {
     if(email === 'alumno@unmsm.edu.pe' && password === 'alumno'){
       profile = {
         name: 'Alumno Perez',
-        role: 'alumno',
+        role: roles.STUDENT,
         email: 'alumno@unmsm.edu.pe'
       };
       newState = { isAuth: true, currentUser: profile };
@@ -27,7 +28,7 @@ class AuthProvider extends React.Component {
     }else if(email === 'admin@unmsm.edu.pe' && password === 'admin'){
       profile = {
         name: 'Admin Lopez',
-        role: 'admin',
+        role: roles.ADMIN,
         email: 'admin@unmsm.edu.pe'
       };
       newState = { isAuth: true, currentUser: profile };
