@@ -12,7 +12,7 @@ class AuthProvider extends React.Component {
     ...loadState('session')
   }
 
-  login = ({email, password}) => new Promise((resolve, reject) => setTimeout(() => {
+  login = ({email, password, role}) => new Promise((resolve, reject) => setTimeout(() => {
     let profile;
     let newState;
     if(email === 'alumno@unmsm.edu.pe' && password === 'alumno'){

@@ -2,14 +2,24 @@ import React from 'react'
 import { Button, Form, Grid, Header, Image, Segment, Loader, Message } from 'semantic-ui-react'
 import { withFormik } from 'formik';
 import * as yup from 'yup';
+import _ from 'lodash';
+import v from 'voca';
 
 import logo from '../assets/images/logo-256.png';
+import roles from '../utils/roles';
+
+const roleSelectOptions = _.values(roles).map(role => ({
+  key: role,
+  value: role,
+  text: v.titleCase(role)
+}));
 
 const LoginForm = props => {
   const {
     handleSubmit, 
     handleChange, 
     handleBlur, 
+    setFieldValue,
     isSubmitting, 
     values,
     isValid,
@@ -38,6 +48,15 @@ const LoginForm = props => {
           </Header>
           <Form size='large' onSubmit={handleSubmit}>
             <Segment stacked>
+              <Form.Select 
+                fluid 
+                options={roleSelectOptions}
+                placeholder='Tipo de usuario'
+                name="rol"
+                value={values.rol}
+                onChange={(e,{name, value}) => setFieldValue(name, value)}
+                onBlur={handleBlur}
+              />
               <Form.Input
                 fluid
                 icon='user'
@@ -85,7 +104,7 @@ const validationSchema = yup.object().shape({
   password: yup.string().min(3, 'Contraseña debe ser más larga.').required('Password requerido')
 });
 
-const mapPropsToValues =  () => ({email: '', password: ''});
+const mapPropsToValues =  () => ({email: '', password: '', rol: roleSelectOptions[0].value});
 
 const handleSubmit = (values, { props, setSubmitting, setErrors }) => {
   props.handleSubmit(values)
