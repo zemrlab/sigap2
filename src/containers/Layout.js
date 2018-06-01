@@ -44,10 +44,14 @@ const Layout = ({logout, currentUser}) => {
                   <Grid.Column key={j}>
                       <Card
                         href={allowed ? module.url : ''}
-                        header={module.name}
-                        meta={allowed ? 'Disponible' : 'No Disponible'}
                         style={allowed ? {} : {cursor: 'not-allowed'}}
-                      />
+                      >
+                        <div className="module-logo-container">{module.icon}</div>
+                        <Card.Content>
+                          <Card.Header>{module.name}</Card.Header>
+                          <Card.Meta>{allowed ? 'Disponible' : 'No Disponible'}</Card.Meta>
+                        </Card.Content>
+                      </Card>
                   </Grid.Column>
                 )
               })}
