@@ -55,7 +55,6 @@ const LoginForm = props => {
                 name="rol"
                 value={values.rol}
                 onChange={(e,{name, value}) => setFieldValue(name, value)}
-                onBlur={handleBlur}
               />
               <Form.Input
                 fluid

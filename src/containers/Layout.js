@@ -13,7 +13,7 @@ const Layout = ({logout, currentUser}) => {
 
   return (
     <div>
-      <Menu fixed='top' inverted>
+      <Menu fixed='top' className="custom-menu" inverted>
         <Container>
           <Menu.Item as='a' header>
             <Image

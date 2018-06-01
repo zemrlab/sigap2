@@ -11,3 +11,22 @@ body {
   text-align: center;
   margin-top: 15px;
 }
+
+.ui.teal.button,
+.ui.inverted.menu, 
+.ui.inverted.segment,
+.ui.teal.buttons .button
+.ui.primary.inverted.segment
+{
+  background-color: #4182c4  !important;
+}
+
+.ui.teal.header{
+  color: #4182c4 !important;
+}
+
+.ui.selection.active.dropdown,
+.ui.selection.active.dropdown .menu
+{
+  border-color: #4182c4 !important;
+}
