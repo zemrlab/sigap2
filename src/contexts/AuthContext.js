@@ -44,7 +44,7 @@ class AuthProvider extends React.Component {
   logout = () => setTimeout(() => {
     this.setState({isAuth: false, currentUser: {}});
     removeState('session');
-  }, 1000)
+  }, 300)
 
   render() {
     const value = {
