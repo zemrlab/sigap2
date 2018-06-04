@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Image, Segment, Loader, Message } from 'semantic-ui-react'
+import { Button, Form, Grid, Image, Segment, Loader, Message } from 'semantic-ui-react'
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 import _ from 'lodash';
@@ -42,11 +42,8 @@ const LoginForm = props => {
         verticalAlign='middle'
       >
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as='h2' color='teal' textAlign='center'>
-          <Image src={logo} />
-            {' '}Ingrese a su cuenta
-          </Header>
-          <Form size='large' onSubmit={handleSubmit}>
+          <Image src={logo} size="medium" centered/>
+          <Form size='large' onSubmit={handleSubmit} style={{marginTop: 20}}>
             <Segment stacked>
               <Form.Select 
                 fluid 

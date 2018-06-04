@@ -17,11 +17,10 @@ const Layout = ({logout, currentUser}) => {
         <Container>
           <Menu.Item as='a' header>
             <Image
-              size='mini'
+              size='tiny'
               src={logo}
               style={{ marginRight: '1.5em' }}
             />
-            SIGA
           </Menu.Item>
           <Menu.Item as='a'>Inicio</Menu.Item>
           <Menu.Item position="right">
@@ -68,7 +67,7 @@ const Layout = ({logout, currentUser}) => {
         <Container textAlign='center'>
           <Image
             centered
-            size='mini'
+            size='small'
             src={logo}
           />
         </Container>
