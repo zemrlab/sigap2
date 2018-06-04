@@ -12,6 +12,14 @@ body {
   margin-top: 15px;
 }
 
+.login-form{
+  background-image: url('./assets/images/fisi.JPG');
+  background-position: center;
+  background-size: 100% auto;
+}
+
+
+/* overriding semantic ui */
 .ui.teal.button,
 .ui.inverted.menu, 
 .ui.inverted.segment,
