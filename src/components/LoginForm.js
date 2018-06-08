@@ -79,7 +79,7 @@ const LoginForm = props => {
               />
 
               {errors._error && (
-                <Message color="red">Asegurese de que el correo y la contraseña son correctos.</Message>
+                <Message color="red">{errors._error}</Message>
               )}
   
               <Button color='teal' fluid size='large' disabled={isSubmitting || !isValid}>
@@ -96,7 +96,7 @@ const LoginForm = props => {
 
 
 const validationSchema = yup.object().shape({
-  email: yup.string().email('Correo electrónico inválido').required('Correo electrónico es requerido'),
+  email: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
   password: yup.string().min(3, 'Contraseña debe ser más larga.').required('Password requerido')
 });
 

@@ -1,53 +1,52 @@
-import React from 'react';
 import roles from './roles';
 
 export default {
-  legajo: {
+  7: {
     name: 'Legajo Docente',
     url: 'https://fisitcsld.herokuapp.com/',
     allowedRoles: [roles.STUDENT, roles.PROFESSOR, roles.ADMIN],
-    icon: <span className="glyphicon glyphicon-user"/>
+    icon: "user"
   },
 
-  recaudaciones: {
+  1: {
     name: 'Carga de Recaudaciones',
     url: 'http://modulodecarga.herokuapp.com/',
     allowedRoles: [roles.ADMIN],
-    icon: <span className="glyphicon glyphicon-piggy-bank"/>
+    icon: "piggy-bank"
   },
 
-  disponibilidad: {
+  5: {
     name: 'Disponibilidad Docente',
     url: 'http://disponibdocente.herokuapp.com/',
     allowedRoles: [roles.PROFESSOR, roles.ADMIN],
-    icon: <span className="glyphicon glyphicon-calendar"/>
+    icon: "calendar"
   },
 
-  estadisticas: {
+  3: {
     name: 'Estadísticas',
     url: 'https://xbaxtian.github.io/front-estadisticas-sigap/',
     allowedRoles: [roles.ADMIN],
-    icon: <span className="glyphicon glyphicon-stats"/>
+    icon: "stats"
   },
 
-  controlTesistas: {
+  6: {
     name: 'Control Tesistas',
-    url: 'http://sistemas.unmsm.edu.pe/',
+    url: 'https://control-tesis-app.herokuapp.com/',
     allowedRoles: [roles.STUDENT, roles.PROFESSOR, roles.ADMIN],
-    icon: <span className="glyphicon glyphicon-education"/>
+    icon: "education"
   },
 
-  controlRecibos: {
+  2: {
     name: 'Control de Recibos',
     url: 'https://modulo-control-recibos.herokuapp.com',
     allowedRoles: [roles.ADMIN],
-    icon: <span className="glyphicon glyphicon-list-alt"/>
+    icon: "list-alt"
   },
 
-  estadoPagos: {
+  4: {
     name: 'Estado de Pagos',
     url: 'http://modulo-alumno-ui.herokuapp.com',
     allowedRoles: [roles.ADMIN],
-    icon: <span className="glyphicon glyphicon-usd"/>
+    icon: "usd"
   },  
 };

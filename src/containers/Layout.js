@@ -5,11 +5,10 @@ import m from 'moment';
 
 import logo from '../assets/images/logo-256.png';
 import { AuthConsumer } from '../contexts/AuthContext';
-import modules from '../utils/modules';
 
 const Layout = ({logout, currentUser}) => {
   const colNumber = 3;
-  const moduleChunks = _.chunk(_.values(modules), colNumber);
+  const moduleChunks = _.chunk(currentUser.modules, colNumber);
 
   return (
     <div>
@@ -24,7 +23,7 @@ const Layout = ({logout, currentUser}) => {
           </Menu.Item>
           <Menu.Item as='a'>Inicio</Menu.Item>
           <Menu.Item position="right">
-            <span style={{fontWeight: 'bold'}}>Usuario:&nbsp;</span>{currentUser.name}
+            <span style={{fontWeight: 'bold'}}>Usuario:&nbsp;</span>{currentUser.user}
           </Menu.Item>
           <Menu.Item>
             <span style={{fontWeight: 'bold'}}>Fecha:&nbsp;</span>{m().format('DD-MM-YYYY')}
@@ -37,23 +36,18 @@ const Layout = ({logout, currentUser}) => {
         <Grid>
           {moduleChunks.map((moduleChunk, i) => (
             <Grid.Row columns={colNumber} key={i}>
-              {moduleChunk.map((module, j) => {
-                const allowed = module.allowedRoles.includes(currentUser.role);
-                return (
-                  <Grid.Column key={j}>
-                      <Card
-                        href={allowed ? module.url : ''}
-                        style={allowed ? {} : {cursor: 'not-allowed'}}
-                      >
-                        <div className="module-logo-container">{module.icon}</div>
-                        <Card.Content>
-                          <Card.Header>{module.name}</Card.Header>
-                          <Card.Meta>{allowed ? 'Disponible' : 'No Disponible'}</Card.Meta>
-                        </Card.Content>
-                      </Card>
-                  </Grid.Column>
-                )
-              })}
+              {moduleChunk.map((module, j) => (
+                <Grid.Column key={j}>
+                  <Card href={module.url}>
+                    <div className="module-logo-container">
+                      <span className={`glyphicon glyphicon-${module.icon}`}/>
+                    </div>
+                    <Card.Content>
+                      <Card.Header>{module.name}</Card.Header>
+                    </Card.Content>
+                  </Card>
+                </Grid.Column>
+              ))}
             </Grid.Row>
           ))}
         </Grid>

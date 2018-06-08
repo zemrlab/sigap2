@@ -1,7 +1,8 @@
 import React from 'react';
+import _ from 'lodash';
 
 import { loadState, saveState, removeState } from '../utils/localStorage';
-import roles from '../utils/roles';
+import modules from '../utils/modules';
 
 const AuthContext = React.createContext();
 
@@ -12,7 +13,7 @@ class AuthProvider extends React.Component {
     ...loadState('session')
   }
 
-  login = ({email, password, role}) => new Promise((resolve, reject) => setTimeout(() => {
+/*   login = ({email, password, role}) => new Promise((resolve, reject) => setTimeout(() => {
     let profile;
     let newState;
     if(email === 'alumno@unmsm.edu.pe' && password === 'alumno'){
@@ -39,7 +40,36 @@ class AuthProvider extends React.Component {
       this.setState({ isAuth: false, currentUser: {} });
       reject({_error: 'Correo y/o contraseña incorrectos.'});
     }
-  }, 1000)) 
+  }, 1000)) */
+  
+  login = ({email, password, rol}) => 
+    fetch('http://back-estadisticas.herokuapp.com/LoginController', {
+      method: 'POST',
+      body: JSON.stringify({
+        user: email,
+        pass: password,
+        tipo: rol
+      }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.ok ? response.json() : Promise.reject({_error: 'Hubo un error'}))
+    .then(response => {
+      if(response.return === 'failure' || response.result === 'error'){
+        return Promise.reject({_error: 'Datos incorrectos'});
+      }else{
+        const newState = {
+          isAuth: true,
+          currentUser: {
+            user: response.user,
+            tipo: rol,
+            modules: _.compact(response.modulos.map(m => modules[parseInt(m.modulos, 10)]))
+          }
+        };
+        this.setState(newState);
+        saveState('session', newState);
+        return newState.currentUser;
+      }
+    })
 
   logout = () => setTimeout(() => {
     this.setState({isAuth: false, currentUser: {}});

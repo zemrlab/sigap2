@@ -1,5 +1,6 @@
 export default {
-  STUDENT: 'ALUMNO',
-  PROFESSOR: 'PROFESSOR',
-  ADMIN: 'ADMINISTRADOR'
+  STUDENT: 'alumno',
+  PROFESSOR: 'docente',
+  ADMIN: 'admin',
+  ADMINISTRATIVE: 'administrativo'
 }
