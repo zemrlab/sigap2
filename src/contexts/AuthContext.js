@@ -31,6 +31,7 @@ class AuthProvider extends React.Component {
         const newState = {
           isAuth: true,
           currentUser: {
+            id: response.id,
             user: response.user,
             tipo: rol,
             modules: _.compact(response.modulos.map(m => modules[parseInt(m.modulos, 10)]))
