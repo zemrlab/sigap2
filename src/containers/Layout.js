@@ -38,7 +38,7 @@ const Layout = ({logout, currentUser}) => {
             <Grid.Row columns={colNumber} key={i}>
               {moduleChunk.map((module, j) => (
                 <Grid.Column key={j}>
-                  <Card href={`${module.url}?userId=${currentUser.id}`}>
+                  <Card href={`${module.url}?id=${currentUser.id}&tipo=${currentUser.tipo}`}>
                     <div className="module-logo-container">
                       <span className={`glyphicon glyphicon-${module.icon}`}/>
                     </div>
