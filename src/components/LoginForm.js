@@ -2,17 +2,9 @@ import React from 'react'
 import { Button, Form, Grid, Image, Segment, Loader, Message } from 'semantic-ui-react'
 import { withFormik } from 'formik';
 import * as yup from 'yup';
-import _ from 'lodash';
 import v from 'voca';
 
 import logo from '../assets/images/logo-256.png';
-import roles from '../utils/roles';
-
-const roleSelectOptions = _.values(roles).map(role => ({
-  key: role,
-  value: role,
-  text: v.titleCase(role)
-}));
 
 class LoginForm extends React.Component {
   state = {
@@ -69,6 +61,7 @@ class LoginForm extends React.Component {
                   name="rol"
                   value={values.rol}
                   onChange={(e,{name, value}) => setFieldValue(name, value)}
+                  error={touched['rol'] && !!errors['rol']}
                 />
                 <Form.Input
                   fluid
@@ -118,7 +111,7 @@ const validationSchema = yup.object().shape({
   rol: yup.string().required('Rol es requerido')
 });
 
-const mapPropsToValues =  () => ({email: '', password: '', rol: roleSelectOptions[0].value});
+const mapPropsToValues =  () => ({email: '', password: '', rol: ''});
 
 const handleSubmit = (values, { props, setSubmitting, setErrors }) => {
   props.handleSubmit(values)
