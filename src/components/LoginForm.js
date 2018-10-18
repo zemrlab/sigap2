@@ -57,7 +57,7 @@ class LoginForm extends React.Component {
                 <Form.Select 
                   fluid 
                   options={this.state.roles}
-                  placeholder='Tipo de usuario'
+                  placeholder='Tipo de usuariooooo'
                   name="rol"
                   value={values.rol}
                   onChange={(e,{name, value}) => setFieldValue(name, value)}
