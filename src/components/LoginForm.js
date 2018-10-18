@@ -67,7 +67,7 @@ class LoginForm extends React.Component {
                   fluid
                   icon='user'
                   iconPosition='left'
-                  placeholder='Correo electrónico'
+                  placeholder='Correo electrónico para recuperar contraseña'
                   name="email"
                   type="text"
                   value={values.email}
