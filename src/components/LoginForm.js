@@ -57,7 +57,7 @@ class LoginForm extends React.Component {
                 <Form.Select 
                   fluid 
                   options={this.state.roles}
-                  placeholder='Tipo de usuariooooo'
+                  placeholder='Tipo de usuario'
                   name="rol"
                   value={values.rol}
                   onChange={(e,{name, value}) => setFieldValue(name, value)}
@@ -67,7 +67,7 @@ class LoginForm extends React.Component {
                   fluid
                   icon='user'
                   iconPosition='left'
-                  placeholder='Correo electrónico para recuperar contraseña'
+                  placeholder='Correo electrónico'
                   name="email"
                   type="text"
                   value={values.email}
@@ -87,7 +87,7 @@ class LoginForm extends React.Component {
                   onBlur={handleBlur}
                   error={touched['password'] && !!errors['password']}
                 />
-                <div><Form.Input type="checkbox" name="recuperar" value="si"/>Recuperar contraseña</div>
+                <Form.Input type="checkbox" name="recuperar" value="si" placeholder='Recuperar contraseña'/>
                 {errors._error && (
                   <Message color="red">{errors._error}</Message>
                 )}
