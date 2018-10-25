@@ -87,7 +87,7 @@ class LoginForm extends React.Component {
                   onBlur={handleBlur}
                   error={touched['password'] && !!errors['password']}
                 />
-                <Form.Input type="checkbox" name="recuperar" value="si"/>Recuperar contraseña<BR>
+                <label><Form.Input type="checkbox" name="recuperar" value="si"/>Recuperar contraseña</label>
                 {errors._error && (
                   <Message color="red">{errors._error}</Message>
                 )}
