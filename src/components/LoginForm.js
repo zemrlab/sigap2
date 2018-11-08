@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Image, Segment, Loader, Message } from 'semantic-ui-react'
+import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header, Icon } from 'semantic-ui-react'
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 import v from 'voca';
@@ -7,20 +7,15 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
 import logo from '../assets/images/logo-256.png';
+import logo_pass from '../assets/images/recup_contras.png';
+
 
 class LoginForm extends React.Component {
   state = {
     roles: [],
     show: false
   }
-  showModal = () => {
-    this.setState({ show: true });
-  }
 
-  hideModal = () => {
-    this.setState({ show: false });
-  }
-  
   componentDidMount(){
     fetch('https://backend-estadisticas-portal.herokuapp.com//LoginController/modulos').then()
     fetch(`${process.env.REACT_APP_API_ROOT}/LoginController/modulos`)
@@ -33,7 +28,13 @@ class LoginForm extends React.Component {
       }))
     }))
   }
+  showModal = () => {
+    this.setState({ show: true });
+  }
 
+  hideModal = () => {
+    this.setState({ show: false });
+  }
   render(){
     const {
       handleSubmit, 
@@ -60,7 +61,7 @@ class LoginForm extends React.Component {
           style={{ height: '100%' }}
           verticalAlign='middle'
         >
-          <Grid.Column style={{ maxWidth: 450 }}>
+          <Grid.Column style={{ maxWidth: 450}}>
             <Image src={logo} size="medium" centered/>
             <Form size='large' onSubmit={handleSubmit} style={{marginTop: 20}}>
               <Segment stacked>
@@ -97,6 +98,7 @@ class LoginForm extends React.Component {
                   onBlur={handleBlur}
                   error={touched['password'] && !!errors['password']}
                 />
+  
                 {errors._error && (
                   <Message color="red">{errors._error}</Message>
                 )}
@@ -105,28 +107,66 @@ class LoginForm extends React.Component {
                   Ingresar&nbsp;
                   <Loader active={isSubmitting} size="tiny" inline/>
                 </Button>
+
+                <Divider horizontal>*</Divider>
+
+                <Button type="button" color='brown' fluid size='large' onClick={this.showModal}>
+                  Olvidé mi contraseña&nbsp;
+                </Button>
+
+                <Modal 
+                  isOpen={this.state.show}
+                  contentLabel="Minimal Modal Example"
+                  className="Modal"
+                >
+                <Header as='h2' image={logo_pass} content='Nueva contraseña' color='brown'/>
+                <Form.Select 
+                  fluid 
+                  options={this.state.roles}
+                  placeholder='Tipo de usuario'
+                  name="rol"
+                  value={values.rol}
+                  onChange={(e,{name, value}) => setFieldValue(name, value)}
+                  error={touched['rol'] && !!errors['rol']}
+                />
+                <Divider horizontal></Divider>
+                <Form.Input
+                  fluid
+                  icon='user'
+                  iconPosition='left'
+                  placeholder='Correo electrónico'
+                  name="email"
+                  type="text"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched['email'] && !!errors['email']}
+                />
+                {errors._error && (
+                  <Message color="red">{errors._error}</Message>
+                )}
+
+                <Divider horizontal></Divider>
+
+                <Button color='teal' fluid size='large' disabled={isSubmitting || !isValid}>
+                  Obtener nueva contraseña&nbsp;
+                  <Loader active={isSubmitting} size="tiny" inline/>
+                </Button>
+
+                <Divider horizontal></Divider>
+
+                <Button color='teal' fluid size='large' onClick={this.hideModal}>
+                  Cancelar&nbsp;
+                </Button>
+                </Modal>
               </Segment>
             </Form>
-            <Modal 
-              isOpen={this.state.show}
-              onRequestClose={this.hideModal}
-              contentLabel="Example Modal" 
-            >
-            <p>Modal</p>
-             <p>Data</p>
-            </Modal>
-            <Button type="button" color='teal' fluid size='medium' onClick={this.showModal}>
-                  Olvidé mi contraseña&nbsp;
-            </Button>
-            
           </Grid.Column>
         </Grid>
       </div>
     );
   }
 }
-
-ReactDOM.render(<LoginForm />, document.getElementById('main'));
 
 const validationSchema = yup.object().shape({
   email: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
