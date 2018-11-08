@@ -129,7 +129,7 @@ class LoginForm extends React.Component {
                   name="rol_recuperar"
                   value={values.rol_recuperar}
                   onChange={(e,{name, value}) => setFieldValue(name, value)}
-                  error={touched['rol_recuperar'] && !!errors['rol_recuperar']}
+                  //error={touched['rol_recuperar'] && !!errors['rol_recuperar']}
                 />
                 <Divider horizontal></Divider>
                 <Form.Input
@@ -142,17 +142,13 @@ class LoginForm extends React.Component {
                   value={values.email_recuperar}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched['email_recuperar'] && !!errors['email_recuperar']}
+                  //error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 />
-                {errors._error && (
-                  <Message color="red">{errors._error}</Message>
-                )}
 
                 <Divider horizontal></Divider>
 
-                <Button color='teal' fluid size='large' disabled={isSubmitting || !isValid}>
+                <Button color='teal' fluid size='large' disabled={validationRecuperar}>
                   Obtener nueva contraseña&nbsp;
-                  <Loader active={isSubmitting} size="tiny" inline/>
                 </Button>
 
                 <Divider horizontal></Divider>
@@ -171,6 +167,10 @@ class LoginForm extends React.Component {
     );
   }
 }
+const validationRecuperar = yup.object().shape({
+  email_recuperar: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
+  rol_recuperar: yup.string().required('Rol es requerido')
+});
 
 const validationSchema = yup.object().shape({
   email: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
