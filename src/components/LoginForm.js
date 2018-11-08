@@ -107,7 +107,12 @@ class LoginForm extends React.Component {
                 </Button>
               </Segment>
             </Form>
-            <Modal show={this.state.show} handleClose={this.hideModal} >
+            <Modal 
+              isOpen={this.state.show}
+              onRequestClose={this.hideModal}
+              style={customStyles}
+              contentLabel="Example Modal" 
+            >
             <p>Modal</p>
              <p>Data</p>
             </Modal>
@@ -122,25 +127,6 @@ class LoginForm extends React.Component {
   }
 }
 
-const Modal = ({ handleClose, show, children }) => {
-  const showHideClassName = show ? 'modal display-block' : 'modal display-none';
-
-  return (
-    <div className={showHideClassName}>
-      <section className='modal-main'>
-        {children}
-        <button
-          onClick={handleClose}
-        >
-          Close
-        </button>
-      </section>
-    </div>
-  );
-};
-
-const container = document.createElement('div');
-document.body.appendChild(container);
 ReactDOM.render(<LoginForm />, container);
 
 const validationSchema = yup.object().shape({
