@@ -110,7 +110,6 @@ class LoginForm extends React.Component {
             <Modal 
               isOpen={this.state.show}
               onRequestClose={this.hideModal}
-              style={customStyles}
               contentLabel="Example Modal" 
             >
             <p>Modal</p>
@@ -127,7 +126,7 @@ class LoginForm extends React.Component {
   }
 }
 
-ReactDOM.render(<LoginForm />, container);
+ReactDOM.render(<LoginForm />, document.getElementById('main'));
 
 const validationSchema = yup.object().shape({
   email: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
