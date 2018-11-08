@@ -149,6 +149,7 @@ class LoginForm extends React.Component {
 
                 <Button color='teal' fluid size='large' disabled={validationRecuperar}>
                   Obtener nueva contraseña&nbsp;
+                  <Loader active={!validationRecuperar} size="tiny" inline/>
                 </Button>
 
                 <Divider horizontal></Divider>
@@ -176,8 +177,6 @@ const validationSchema = yup.object().shape({
   email: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
   password: yup.string().min(3, 'Contraseña debe ser más larga.').required('Password requerido'),
   rol: yup.string().required('Rol es requerido'),
-  email_recuperar: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
-  rol_recuperar: yup.string().required('Rol es requerido')
 });
 
 const mapPropsToValues =  () => ({email: '', password: '', rol: '',email_recuperar: '', rol_recuperar: '' });
