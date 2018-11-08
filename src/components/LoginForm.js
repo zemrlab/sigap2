@@ -8,9 +8,17 @@ import logo from '../assets/images/logo-256.png';
 
 class LoginForm extends React.Component {
   state = {
-    roles: []
+    roles: [],
+    show: false
+  }
+  showModal = () => {
+    this.setState({ show: true });
   }
 
+  hideModal = () => {
+    this.setState({ show: false });
+  }
+  
   componentDidMount(){
     fetch('https://backend-estadisticas-portal.herokuapp.com//LoginController/modulos').then()
     fetch(`${process.env.REACT_APP_API_ROOT}/LoginController/modulos`)
@@ -95,17 +103,43 @@ class LoginForm extends React.Component {
                   Ingresar&nbsp;
                   <Loader active={isSubmitting} size="tiny" inline/>
                 </Button>
-                <Button color='teal' fluid size='medium'>
-                  Olvidé mi contraseña&nbsp;
-                </Button>
               </Segment>
             </Form>
+            <Modal show={this.state.show} handleClose={this.hideModal} >
+            <p>Modal</p>
+             <p>Data</p>
+            </Modal>
+            <Button type="button" color='teal' fluid size='medium' onClick={this.showModal}>
+                  Olvidé mi contraseña&nbsp;
+            </Button>
+            
           </Grid.Column>
         </Grid>
       </div>
     );
   }
 }
+
+const Modal = ({ handleClose, show, children }) => {
+  const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+
+  return (
+    <div className={showHideClassName}>
+      <section className='modal-main'>
+        {children}
+        <button
+          onClick={handleClose}
+        >
+          Close
+        </button>
+      </section>
+    </div>
+  );
+};
+
+const container = document.createElement('div');
+document.body.appendChild(container);
+ReactDOM.render(<LoginForm />, container);
 
 const validationSchema = yup.object().shape({
   email: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
