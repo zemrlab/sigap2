@@ -20,11 +20,11 @@ body {
 
 .Modal {
   position: absolute;
-  top: 2%;
-  left: 40%;
-  right: 40%;
-  bottom: 90%;
-  background-color: rgb(255, 230, 194);
+  top: 38%;
+  left: 39%;
+  right: 39%;
+  bottom: 60%;
+  background-color: rgb(255, 255, 255);
 
   font-size: 18px;
   line-height: 18px;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header, Icon } from 'semantic-ui-react'
+import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header } from 'semantic-ui-react'
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 import v from 'voca';
@@ -78,7 +78,7 @@ class LoginForm extends React.Component {
                   fluid
                   icon='user'
                   iconPosition='left'
-                  placeholder='Correo electrónico'
+                  placeholder='Correo electrónico / Nombre de usuario'
                   name="email"
                   type="text"
                   value={values.email}
@@ -119,28 +119,30 @@ class LoginForm extends React.Component {
                   contentLabel="Minimal Modal Example"
                   className="Modal"
                 >
+                <Form size='large' >
+                <Segment stacked>
                 <Header as='h2' image={logo_pass} content='Nueva contraseña' color='brown'/>
                 <Form.Select 
                   fluid 
                   options={this.state.roles}
                   placeholder='Tipo de usuario'
-                  name="rol"
-                  value={values.rol}
+                  name="rol_recuperar"
+                  value={values.rol_recuperar}
                   onChange={(e,{name, value}) => setFieldValue(name, value)}
-                  error={touched['rol'] && !!errors['rol']}
+                  error={touched['rol_recuperar'] && !!errors['rol_recuperar']}
                 />
                 <Divider horizontal></Divider>
                 <Form.Input
                   fluid
                   icon='user'
                   iconPosition='left'
-                  placeholder='Correo electrónico'
-                  name="email"
+                  placeholder='Correo electrónico / Nombre de usuario'
+                  name="email_recuperar"
                   type="text"
-                  value={values.email}
+                  value={values.email_recuperar}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  error={touched['email'] && !!errors['email']}
+                  error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 />
                 {errors._error && (
                   <Message color="red">{errors._error}</Message>
@@ -158,6 +160,8 @@ class LoginForm extends React.Component {
                 <Button color='teal' fluid size='large' onClick={this.hideModal}>
                   Cancelar&nbsp;
                 </Button>
+                </Segment>
+                </Form>
                 </Modal>
               </Segment>
             </Form>
@@ -171,16 +175,19 @@ class LoginForm extends React.Component {
 const validationSchema = yup.object().shape({
   email: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
   password: yup.string().min(3, 'Contraseña debe ser más larga.').required('Password requerido'),
-  rol: yup.string().required('Rol es requerido')
+  rol: yup.string().required('Rol es requerido'),
+  email_recuperar: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
+  rol_recuperar: yup.string().required('Rol es requerido')
 });
 
-const mapPropsToValues =  () => ({email: '', password: '', rol: ''});
+const mapPropsToValues =  () => ({email: '', password: '', rol: '',email_recuperar: '', rol_recuperar: '' });
 
 const handleSubmit = (values, { props, setSubmitting, setErrors }) => {
   props.handleSubmit(values)
   .catch(setErrors)
   .finally(() => setSubmitting(false));
 };
+
 
 const displayName = 'LoginForm';
 
