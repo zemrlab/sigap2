@@ -13,7 +13,8 @@ import logo_pass from '../assets/images/recup_contras.png';
 class LoginForm extends React.Component {
   state = {
     roles: [],
-    show: false
+    show: false,
+    mostrarBotonRecuperar: false
   }
 
   componentDidMount(){
@@ -35,6 +36,15 @@ class LoginForm extends React.Component {
   hideModal = () => {
     this.setState({ show: false });
   }
+  validationRecuperar = () => {
+
+    this.setState({mostrarBotonRecuperar: yup.object().shape({
+      email_recuperar: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
+      rol_recuperar: yup.string().required('Rol es requerido')
+      }) 
+    })
+  }
+
   render(){
     const {
       handleSubmit, 
@@ -119,7 +129,7 @@ class LoginForm extends React.Component {
                   contentLabel="Minimal Modal Example"
                   className="Modal"
                 >
-                <Form size='large' >
+                <Form size='large' onChange = {this.validationRecuperar}>
                 <Segment stacked>
                 <Header as='h2' image={logo_pass} content='Nueva contraseña' color='brown'/>
                 <Form.Select 
@@ -147,7 +157,7 @@ class LoginForm extends React.Component {
 
                 <Divider horizontal></Divider>
 
-                <Button color='teal' fluid size='large' disabled={validationRecuperar()}>
+                <Button color='teal' fluid size='large' disabled={!this.state.mostrarBotonRecuperar}>
                   Obtener nueva contraseña&nbsp;
                 </Button>
 
@@ -167,13 +177,7 @@ class LoginForm extends React.Component {
     );
   }
 }
-function validationRecuperar(){
 
-  return yup.object().shape({
-  email_recuperar: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
-  rol_recuperar: yup.string().required('Rol es requerido')
-  });
-}
 const validationSchema = yup.object().shape({
   email: yup.string()/* .email('Correo electrónico inválido') */.required('Correo electrónico es requerido'),
   password: yup.string().min(3, 'Contraseña debe ser más larga.').required('Password requerido'),
