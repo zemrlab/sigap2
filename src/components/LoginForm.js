@@ -4,6 +4,7 @@ import { withFormik } from 'formik';
 import * as yup from 'yup';
 import v from 'voca';
 import Modal from 'react-modal';
+import _ from 'lodash';
 
 import logo from '../assets/images/logo-256.png';
 import logo_pass from '../assets/images/recup_contras.png';
