@@ -46,8 +46,6 @@ class LoginForm extends React.Component {
         pass: this.state.password_nuevo
       }),
       headers: { 
-        "Access-Control-Allow-Credentials" : "true",
-        "Access-Control-Allow-Origin" : cors_url,
         'Content-Type': 'application/json' 
       }
     })
