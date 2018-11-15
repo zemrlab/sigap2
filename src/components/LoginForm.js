@@ -162,7 +162,7 @@ class LoginForm extends React.Component {
                   contentLabel="Minimal Modal Example"
                   className="Modal"
                 >
-                <Form size='large' onChange = {this.validationRecuperar} >
+                <Form size='large' onChange = {this.validationRecuperar} onSubmit = {AuthConsumer.cambiarPassword}>
                 <Segment stacked>
                 <Header as='h1' image={logo_pass} content='Nueva contraseña' color='brown' textAlign='left'/>
                 <Divider />
@@ -231,10 +231,10 @@ class LoginForm extends React.Component {
                   onBlur={handleBlur}
                   //error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 /> 
-                <Button color='teal' fluid size='large' disabled={!this.state.mostrarBotonRecuperar} onClick={ AuthConsumer.cambiarPassword}>
+                <Button color='teal' fluid size='large' disabled={!this.state.mostrarBotonRecuperar} >
                   Cambiar contraseña&nbsp;
                 </Button>
-                
+
                 <Divider />
 
                 <Button color='gray' fluid size='large' onClick={this.hideModal}>
