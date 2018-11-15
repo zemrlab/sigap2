@@ -13,7 +13,7 @@ class AuthProvider extends React.Component {
     ...loadState('session')
   }
   cambiarPassword = ({email_recuperar, dni_recuperar, telefono_recuperar, password_nuevo}) => 
-    fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController.php`, {
+    fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController`, {
       method: 'POST',
       body: JSON.stringify({
         email: email_recuperar,
