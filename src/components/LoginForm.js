@@ -45,7 +45,11 @@ class LoginForm extends React.Component {
         telefono: this.state.telefono_recuperar,
         pass: this.state.password_nuevo
       }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        "Access-Control-Allow-Credentials" : "true",
+        "Access-Control-Allow-Origin" : cors_url,
+        'Content-Type': 'application/json' 
+      }
     })
     .then(response => response.ok ? response.json() : Promise.reject({_error: 'Hubo un error'}))
     .then(response => {
