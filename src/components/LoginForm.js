@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header } from 'semantic-ui-react'
+import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header, Label } from 'semantic-ui-react'
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 import v from 'voca';
-import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import { AuthConsumer } from '../contexts/AuthContext';
 
 import logo from '../assets/images/logo-256.png';
 import logo_pass from '../assets/images/recup_contras.png';
@@ -14,7 +14,12 @@ class LoginForm extends React.Component {
   state = {
     roles: [],
     show: false,
-    mostrarBotonRecuperar: false
+    mostrarBotonRecuperar: false,
+    nombre_ususario_recuperar: "",
+    email_recuperar: "",
+    dni_recuperar: "",
+    telefono_recuperar: "",
+    password_nuevo: ""
   }
 
   componentDidMount(){
@@ -35,6 +40,34 @@ class LoginForm extends React.Component {
 
   hideModal = () => {
     this.setState({ show: false });
+  }
+
+  handleChangeModal= (event) => {
+    switch(event.target.name)
+    {
+      case "nombre_ususario_recuperar":
+      this.setState({nombre_ususario_recuperar: event.target.value});
+      break;
+
+      case "email_recuperar":
+      this.setState({email_recuperar: event.target.value});
+      break;
+
+      case "dni_recuperar":
+      this.setState({dni_recuperar: event.target.value});
+      break;
+
+      case "telefono_recuperar":
+      this.setState({telefono_recuperar: event.target.value});
+      break;
+
+      case "password_nuevo":
+      this.setState({password_nuevo: event.target.value});
+    }
+    
+  }
+  handleBlurModal= (event) => {
+    this.validationRecuperar;    
   }
   validationRecuperar = () => {
 
@@ -118,7 +151,7 @@ class LoginForm extends React.Component {
                   <Loader active={isSubmitting} size="tiny" inline/>
                 </Button>
 
-                <Divider horizontal>*</Divider>
+                <Divider/>
 
                 <Button type="button" color='brown' fluid size='large' onClick={this.showModal}>
                   Olvidé mi contraseña&nbsp;
@@ -129,41 +162,82 @@ class LoginForm extends React.Component {
                   contentLabel="Minimal Modal Example"
                   className="Modal"
                 >
-                <Form size='large' onChange = {this.validationRecuperar}>
+                <Form size='large' onChange = {this.validationRecuperar} >
                 <Segment stacked>
-                <Header as='h2' image={logo_pass} content='Nueva contraseña' color='brown'/>
-                <Form.Select 
-                  fluid 
-                  options={this.state.roles}
-                  placeholder='Tipo de usuario'
-                  name="rol_recuperar"
-                  value={values.rol_recuperar}
-                  onChange={(e,{name, value}) => setFieldValue(name, value)}
-                  //error={touched['rol_recuperar'] && !!errors['rol_recuperar']}
-                />
-                <Divider horizontal></Divider>
+                <Header as='h1' image={logo_pass} content='Nueva contraseña' color='brown' textAlign='left'/>
+                <Divider />
+                <Header as='h3' color='orange' textAlign='left'>Ingrese campos de validación</Header>
+                
                 <Form.Input
                   fluid
                   icon='user'
                   iconPosition='left'
-                  placeholder='Correo electrónico / Nombre de usuario'
-                  name="email_recuperar"
+                  placeholder='Nombre de usuario'
+                  name="nombre_ususario_recuperar"
                   type="text"
-                  value={values.email_recuperar}
-                  onChange={handleChange}
+                  value={this.state.nombre_usuario_recuperar}
+                  onChange={this.handleChangeModal}
                   onBlur={handleBlur}
                   //error={touched['email_recuperar'] && !!errors['email_recuperar']}
-                />
+                /> 
 
-                <Divider horizontal></Divider>
+                <Form.Input
+                  fluid
+                  icon='at'
+                  iconPosition='left'
+                  placeholder='Correo electrónico'
+                  name="email_recuperar"
+                  type="text"
+                  value={this.state.email_recuperar}
+                  onChange={this.handleChangeModal}
+                  onBlur={handleBlur}
+                  //error={touched['email_recuperar'] && !!errors['email_recuperar']}
+                />     
+                
+                <Form.Input
+                  fluid
+                  icon='address card'
+                  iconPosition='left'
+                  placeholder='DNI'
+                  name="dni_recuperar"
+                  type="text"
+                  value={this.state.dni_recuperar}
+                  onChange={this.handleChangeModal}
+                  onBlur={handleBlur}
+                  //error={touched['email_recuperar'] && !!errors['email_recuperar']}
+                />      
 
-                <Button color='teal' fluid size='large' disabled={!this.state.mostrarBotonRecuperar}>
-                  Obtener nueva contraseña&nbsp;
+                <Form.Input
+                  fluid
+                  icon='phone'
+                  iconPosition='left'
+                  placeholder='Número de teléfono'
+                  name="telefono_recuperar"
+                  type="text"
+                  value={this.state.telefono_recuperar}
+                  onChange={this.handleChangeModal}
+                  onBlur={handleBlur}
+                  //error={touched['email_recuperar'] && !!errors['email_recuperar']}
+                /> 
+                <Form.Input
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder='Nueva contraseña'
+                  name="password_nuevo"
+                  type="text"
+                  value={this.state.password_nuevo}
+                  onChange={this.handleChangeModal}
+                  onBlur={handleBlur}
+                  //error={touched['email_recuperar'] && !!errors['email_recuperar']}
+                /> 
+                <Button color='teal' fluid size='large' disabled={!this.state.mostrarBotonRecuperar} onClick={ AuthConsumer.cambiarPassword}>
+                  Cambiar contraseña&nbsp;
                 </Button>
+                
+                <Divider />
 
-                <Divider horizontal></Divider>
-
-                <Button color='teal' fluid size='large' onClick={this.hideModal}>
+                <Button color='gray' fluid size='large' onClick={this.hideModal}>
                   Cancelar&nbsp;
                 </Button>
                 </Segment>
@@ -184,7 +258,7 @@ const validationSchema = yup.object().shape({
   rol: yup.string().required('Rol es requerido'),
 });
 
-const mapPropsToValues =  () => ({email: '', password: '', rol: '',email_recuperar: '', rol_recuperar: '' });
+const mapPropsToValues =  () => ({email: '', password: '', rol: ''});
 
 const handleSubmit = (values, { props, setSubmitting, setErrors }) => {
   props.handleSubmit(values)

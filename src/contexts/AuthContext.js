@@ -12,7 +12,26 @@ class AuthProvider extends React.Component {
     currentUser: {},
     ...loadState('session')
   }
-  
+  cambiarPassword = ({email_recuperar, dni_recuperar, telefono_recuperar, password_nuevo}) => 
+    fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController.php`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email_recuperar,
+        dni: dni_recuperar,
+        telefono: telefono_recuperar,
+        pass: password_nuevo
+      }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.ok ? response.json() : Promise.reject({_error: 'Hubo un error'}))
+    .then(response => {
+      if(response.return === 'failure' || response.result === 'error'){
+        return Promise.reject({_error: 'Datos incorrectos'});
+      }else{
+
+      }
+    })
+
   login = ({email, password, rol}) => 
     fetch(`${process.env.REACT_APP_API_ROOT}/LoginController`, {
       method: 'POST',
