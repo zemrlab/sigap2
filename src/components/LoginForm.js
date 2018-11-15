@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header, Label } from 'semantic-ui-react'
+import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header} from 'semantic-ui-react'
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 import v from 'voca';
@@ -14,7 +14,7 @@ class LoginForm extends React.Component {
     roles: [],
     show: false,
     mostrarBotonRecuperar: false,
-    nombre_ususario_recuperar: "",
+    nombre_usuario_recuperar: "",
     email_recuperar: "",
     dni_recuperar: "",
     telefono_recuperar: "",
@@ -33,14 +33,16 @@ class LoginForm extends React.Component {
       }))
     }))
   }
-  cambiarPassword = ({email_recuperar, dni_recuperar, telefono_recuperar, password_nuevo}) => 
+
+  cambiar_password = () => {
+    console.log("Aqui");
     fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController`, {
       method: 'POST',
       body: JSON.stringify({
-        email: email_recuperar,
-        dni: dni_recuperar,
-        telefono: telefono_recuperar,
-        pass: password_nuevo
+        email: this.state.email_recuperar, 
+        dni: this.state.dni_recuperar,
+        telefono: this.state.telefono_recuperar,
+        pass: this.state.password_nuevo
       }),
       headers: { 'Content-Type': 'application/json' }
     })
@@ -49,9 +51,11 @@ class LoginForm extends React.Component {
       if(response.return === 'failure' || response.result === 'error'){
         return Promise.reject({_error: 'Datos incorrectos'});
       }else{
-
+        console.log("Error");
       }
     })
+  }
+  
 
   showModal = () => {
     this.setState({ show: true });
@@ -64,8 +68,8 @@ class LoginForm extends React.Component {
   handleChangeModal= (event) => {
     switch(event.target.name)
     {
-      case "nombre_ususario_recuperar":
-      this.setState({nombre_ususario_recuperar: event.target.value});
+      case "nombre_usuario_recuperar":
+      this.setState({nombre_usuario_recuperar: event.target.value});
       break;
 
       case "email_recuperar":
@@ -181,7 +185,7 @@ class LoginForm extends React.Component {
                   contentLabel="Minimal Modal Example"
                   className="Modal"
                 >
-                <Form size='large' onChange = {this.validationRecuperar} onSubmit = {this.cambiarPassword}>
+                <Form size='large' onChange = {this.validationRecuperar}>
                 <Segment stacked>
                 <Header as='h1' image={logo_pass} content='Nueva contraseña' color='brown' textAlign='left'/>
                 <Divider />
@@ -192,11 +196,11 @@ class LoginForm extends React.Component {
                   icon='user'
                   iconPosition='left'
                   placeholder='Nombre de usuario'
-                  name="nombre_ususario_recuperar"
+                  name="nombre_usuario_recuperar"
                   type="text"
                   value={this.state.nombre_usuario_recuperar}
                   onChange={this.handleChangeModal}
-                  onBlur={handleBlur}
+                  //onBlur={handleBlur}
                   //error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 /> 
 
@@ -209,7 +213,7 @@ class LoginForm extends React.Component {
                   type="text"
                   value={this.state.email_recuperar}
                   onChange={this.handleChangeModal}
-                  onBlur={handleBlur}
+                  //onBlur={handleBlur}
                   //error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 />     
                 
@@ -222,7 +226,7 @@ class LoginForm extends React.Component {
                   type="text"
                   value={this.state.dni_recuperar}
                   onChange={this.handleChangeModal}
-                  onBlur={handleBlur}
+                  //onBlur={handleBlur}
                   //error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 />      
 
@@ -235,7 +239,7 @@ class LoginForm extends React.Component {
                   type="text"
                   value={this.state.telefono_recuperar}
                   onChange={this.handleChangeModal}
-                  onBlur={handleBlur}
+                  //onBlur={handleBlur}
                   //error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 /> 
                 <Form.Input
@@ -247,10 +251,10 @@ class LoginForm extends React.Component {
                   type="text"
                   value={this.state.password_nuevo}
                   onChange={this.handleChangeModal}
-                  onBlur={handleBlur}
+                  //onBlur={handleBlur}
                   //error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 /> 
-                <Button color='teal' fluid size='large' disabled={!this.state.mostrarBotonRecuperar} >
+                <Button color='teal' fluid size='large' /*disabled={!this.state.mostrarBotonRecuperar}*/ onClick={this.cambiar_password}>
                   Cambiar contraseña&nbsp;
                 </Button>
 
