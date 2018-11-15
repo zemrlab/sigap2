@@ -4,7 +4,6 @@ import { withFormik } from 'formik';
 import * as yup from 'yup';
 import v from 'voca';
 import Modal from 'react-modal';
-import { AuthConsumer } from '../contexts/AuthContext';
 
 import logo from '../assets/images/logo-256.png';
 import logo_pass from '../assets/images/recup_contras.png';
@@ -34,6 +33,26 @@ class LoginForm extends React.Component {
       }))
     }))
   }
+  cambiarPassword = ({email_recuperar, dni_recuperar, telefono_recuperar, password_nuevo}) => 
+    fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email_recuperar,
+        dni: dni_recuperar,
+        telefono: telefono_recuperar,
+        pass: password_nuevo
+      }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.ok ? response.json() : Promise.reject({_error: 'Hubo un error'}))
+    .then(response => {
+      if(response.return === 'failure' || response.result === 'error'){
+        return Promise.reject({_error: 'Datos incorrectos'});
+      }else{
+
+      }
+    })
+
   showModal = () => {
     this.setState({ show: true });
   }
@@ -162,7 +181,7 @@ class LoginForm extends React.Component {
                   contentLabel="Minimal Modal Example"
                   className="Modal"
                 >
-                <Form size='large' onChange = {this.validationRecuperar} onSubmit = {AuthConsumer.cambiarPassword}>
+                <Form size='large' onChange = {this.validationRecuperar} onSubmit = {this.cambiarPassword}>
                 <Segment stacked>
                 <Header as='h1' image={logo_pass} content='Nueva contraseña' color='brown' textAlign='left'/>
                 <Divider />
