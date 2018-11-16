@@ -4,7 +4,6 @@ import { withFormik } from 'formik';
 import * as yup from 'yup';
 import v from 'voca';
 import Modal from 'react-modal';
-import _ from 'lodash';
 
 import logo from '../assets/images/logo-256.png';
 import logo_pass from '../assets/images/recup_contras.png';
@@ -14,6 +13,8 @@ class LoginForm extends React.Component {
   state = {
     roles: [],
     show: false,
+    hideMessageOk: true,
+    hideMessageError: true,
     mostrarBotonRecuperar: false,
     nombre_usuario_recuperar: "",
     email_recuperar: "",
@@ -56,6 +57,7 @@ class LoginForm extends React.Component {
         return Promise.reject({_error: 'Datos incorrectos'});
       }else{
         console.log(response.result);
+        this.showMessageOk;
       }
     })
   }
@@ -67,6 +69,20 @@ class LoginForm extends React.Component {
 
   hideModal = () => {
     this.setState({ show: false });
+  }
+  showMessageOk = () => {
+    this.setState({ hideMessageOk: false });
+  }
+
+  hideMessageOk = () => {
+    this.setState({ hideMessageOk: true });
+  }
+  showMessageError = () => {
+    this.setState({ hideMessageError: false });
+  }
+
+  hideMessageError = () => {
+    this.setState({ hideMessageError: true });
   }
 
   handleChangeModal= (event) => {
@@ -90,11 +106,12 @@ class LoginForm extends React.Component {
 
       case "password_nuevo":
       this.setState({password_nuevo: event.target.value});
+      break;
     }
     
   }
   handleBlurModal= (event) => {
-    this.validationRecuperar;    
+    this.validationRecuperar();    
   }
   validationRecuperar = () => {
 
@@ -183,13 +200,16 @@ class LoginForm extends React.Component {
                 <Button type="button" color='brown' fluid size='large' onClick={this.showModal}>
                   Olvidé mi contraseña&nbsp;
                 </Button>
-
+                </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
                 <Modal 
                   isOpen={this.state.show}
                   contentLabel="Minimal Modal Example"
                   className="Modal"
                 >
-                <Form size='large' onChange = {this.validationRecuperar} method="POST">
+                <Form size='large' onChange = {this.validationRecuperar} method="POST" onSubmit={this.cambiar_password}>
                 <Segment stacked>
                 <Header as='h1' image={logo_pass} content='Nueva contraseña' color='brown' textAlign='left'/>
                 <Divider />
@@ -258,7 +278,17 @@ class LoginForm extends React.Component {
                   //onBlur={handleBlur}
                   //error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 /> 
-                <Button color='teal' fluid size='large' /*disabled={!this.state.mostrarBotonRecuperar}*/ onClick={this.cambiar_password}>
+                <Message negative hidden={this.state.hideMessageError}>
+                  <Message.Header>We're sorry we can't apply that discount</Message.Header>
+                  <p>That offer has expired</p>
+                </Message>
+                <Message positive hidden={this.state.hideMessageOk}>
+                <Message.Header>Your user registration was successful</Message.Header>
+                <p>
+                You may now log-in with the username you have chosen
+                </p>
+                </Message>
+                <Button color='teal' fluid size='large' /*disabled={!this.state.mostrarBotonRecuperar} onClick={this.cambiar_password}*/>
                   Cambiar contraseña&nbsp;
                 </Button>
 
@@ -270,10 +300,7 @@ class LoginForm extends React.Component {
                 </Segment>
                 </Form>
                 </Modal>
-              </Segment>
-            </Form>
-          </Grid.Column>
-        </Grid>
+              
       </div>
     );
   }
