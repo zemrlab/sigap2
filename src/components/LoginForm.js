@@ -63,6 +63,11 @@ class LoginForm extends React.Component {
         return Promise.reject({_error: 'Datos incorrectos'});
       }else{
         console.log(response.result);
+
+        console.log(response.email );
+        console.log(response.dni );
+        console.log(response.telefono);
+        console.log(response.pass );
       }
     })
   }
