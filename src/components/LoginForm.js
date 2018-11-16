@@ -55,7 +55,7 @@ class LoginForm extends React.Component {
       if(response.return === 'failure' || response.result === 'error'){
         return Promise.reject({_error: 'Datos incorrectos'});
       }else{
-        console.log("Error");
+        console.log(response);
       }
     })
   }
@@ -264,7 +264,7 @@ class LoginForm extends React.Component {
 
                 <Divider />
 
-                <Button color='gray' fluid size='large' onClick={this.hideModal}>
+                <Button color='grey' fluid size='large' onClick={this.hideModal}>
                   Cancelar&nbsp;
                 </Button>
                 </Segment>
