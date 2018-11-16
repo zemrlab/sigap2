@@ -189,7 +189,7 @@ class LoginForm extends React.Component {
                   contentLabel="Minimal Modal Example"
                   className="Modal"
                 >
-                <Form size='large' onChange = {this.validationRecuperar}>
+                <Form size='large' onChange = {this.validationRecuperar} method="POST">
                 <Segment stacked>
                 <Header as='h1' image={logo_pass} content='Nueva contraseña' color='brown' textAlign='left'/>
                 <Divider />
