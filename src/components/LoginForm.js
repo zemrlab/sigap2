@@ -55,7 +55,7 @@ class LoginForm extends React.Component {
       if(response.return === 'failure' || response.result === 'error'){
         return Promise.reject({_error: 'Datos incorrectos'});
       }else{
-        console.log(response);
+        console.log(response.result);
       }
     })
   }
