@@ -37,7 +37,7 @@ class LoginForm extends React.Component {
 
   cambiar_password = () => {
     console.log("Aqui");
-    fetch('https://backend-estadisticas-portal.herokuapp.com//LoginController/RecuperacionController').then()
+    //fetch('https://backend-estadisticas-portal.herokuapp.com//LoginController/RecuperacionController').then()
     fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController`, {
       method: 'POST',
       body: JSON.stringify({
