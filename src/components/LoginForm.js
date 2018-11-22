@@ -43,10 +43,10 @@ class LoginForm extends React.Component {
     fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController/index`, {
       method: 'POST',
       body: JSON.stringify({
-        email: this.state.email_recuperar, 
-        dni: this.state.dni_recuperar,
-        telefono: this.state.telefono_recuperar,
-        pass: this.state.password_nuevo
+        "email": this.state.email_recuperar, 
+        "dni": this.state.dni_recuperar,
+        "telefono": this.state.telefono_recuperar,
+        "pass": this.state.password_nuevo
       }),
       headers: { 
         'Content-Type': 'application/json' 
