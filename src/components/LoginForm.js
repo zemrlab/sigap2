@@ -38,34 +38,7 @@ class LoginForm extends React.Component {
     }))
   }
 
-  cambiar_password = () => {
-    console.log("Aqui");
-    console.log("xd"+ this.state.email_recuperar+ this.state.dni_recuperar+this.state.telefono_recuperar+this.state.password_nuevo);
-    //fetch('https://backend-estadisticas-portal.herokuapp.com//RecuperacionController/').then()
-    fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController`, {
-      method: 'POST',
-      body: JSON.stringify({
-        "email": this.state.email_recuperar, 
-        "dni": this.state.dni_recuperar,
-        "telefono": this.state.telefono_recuperar,
-        "pass": this.state.password_nuevo
-      }),
-      headers: { 
-        'Content-Type': 'application/json' 
-      }
-    })
-    .then(response => response.ok ? response.json() : Promise.reject({_error: 'Hubo un error'}))
-    .then(response => {
-      if(response.return === 'failure' || response.result === 'error'){
-        return Promise.reject({_error: 'Datos incorrectos'});
-      }else{
-        console.log(response.result);
-        this.showMessageOk;
-        this.setMensaje(response.result);
-        this.show;
-      }
-    })
-  }
+  
   
   showAviso = () => {
     this.setState({ openAviso: true })
@@ -125,6 +98,34 @@ class LoginForm extends React.Component {
       break;
     }
     
+  }
+  cambiar_password = () => {
+    console.log("Aqui");
+    console.log("xd"+ this.state.email_recuperar+ this.state.dni_recuperar+this.state.telefono_recuperar+this.state.password_nuevo);
+    //fetch('https://backend-estadisticas-portal.herokuapp.com//RecuperacionController/').then()
+    fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController`, {
+      method: 'POST',
+      body: JSON.stringify({
+        "email": this.state.email_recuperar, 
+        "dni": this.state.dni_recuperar,
+        "telefono": this.state.telefono_recuperar,
+        "pass": this.state.password_nuevo
+      }),
+      headers: { 
+        'Content-Type': 'application/json' 
+      }
+    })
+    .then(response => response.ok ? response.json() : Promise.reject({_error: 'Hubo un error'}))
+    .then(response => {
+      if(response.return === 'failure' || response.result === 'error'){
+        return Promise.reject({_error: 'Datos incorrectos'});
+      }else{
+        console.log(response.result);
+        this.showMessageOk;
+        this.setMensaje(response.result);
+        this.showAviso();
+      }
+    })
   }
   handleBlurModal= (event) => {
     this.validationRecuperar();    
