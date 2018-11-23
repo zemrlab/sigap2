@@ -118,6 +118,7 @@ class LoginForm extends React.Component {
     .then(response => response.ok ? response.json() : Promise.reject({_error: 'Hubo un error'}))
     .then(response => {
       if(response.return === 'failure' || response.result === 'error'){
+        this.showMessageError();
         return Promise.reject({_error: 'Datos incorrectos'});
       }else{
         console.log(response.result);
