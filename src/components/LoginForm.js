@@ -310,7 +310,7 @@ class LoginForm extends React.Component {
                 <Divider />
 
                 <Button color='grey' fluid size='large' onClick={this.hideModal}>
-                  Cancelar&nbsp;
+                  Cerrar&nbsp;
                 </Button>
                 </Segment>
                 </Form>
