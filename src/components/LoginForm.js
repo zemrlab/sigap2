@@ -316,7 +316,7 @@ class LoginForm extends React.Component {
                 </Segment>
                 </Form>
                 </Modal>
-              <Confirm open={openAviso} content={this.state.mensaje} onCancel={this.handleCancel} onConfirm={this.handleConfirm} />
+              <Confirm open={this.state.openAviso} content={this.state.mensaje} onCancel={this.handleCancel} onConfirm={this.handleConfirm} />
       </div>
     );
   }
