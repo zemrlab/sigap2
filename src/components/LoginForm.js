@@ -121,7 +121,7 @@ class LoginForm extends React.Component {
         return Promise.reject({_error: 'Datos incorrectos'});
       }else{
         console.log(response.result);
-        this.showMessageOk;
+        this.showMessageOk();
         this.setMensaje(response.result);
         this.showAviso();
       }
@@ -317,8 +317,10 @@ class LoginForm extends React.Component {
                 </Segment>
                 </Form>
                 </Modal>
-              <Confirm open={this.state.openAviso} content={this.state.mensaje} onCancel={this.handleCancel} onConfirm={this.handleConfirm} />
-      </div>
+              <div>
+                  <Confirm open={this.state.openAviso} content={this.state.mensaje} onCancel={this.handleCancel} onConfirm={this.handleConfirm} />
+              </div>
+          </div>
     );
   }
 }
