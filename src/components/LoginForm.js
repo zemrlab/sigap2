@@ -302,9 +302,6 @@ class LoginForm extends React.Component {
                 </Message>
                 <Message positive hidden={this.state.hideMessageOk}>
                 <Message.Header>Contraseña cambiada con éxito</Message.Header>
-                //<p>
-               //You may now log-in with the username you have chosen
-                //</p>
                 </Message>
                 <Button color='teal' fluid size='large' /*disabled={!this.state.mostrarBotonRecuperar} onClick={this.cambiar_password}*/>
                   Cambiar contraseña&nbsp;
