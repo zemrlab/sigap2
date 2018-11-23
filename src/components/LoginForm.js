@@ -123,8 +123,8 @@ class LoginForm extends React.Component {
       }else{
         console.log(response.result);
         this.showMessageOk();
-        this.setMensaje(response.result);
-        this.showAviso();
+        //this.setMensaje(response.result);
+        //this.showAviso();
       }
     })
   }
@@ -301,10 +301,10 @@ class LoginForm extends React.Component {
                   <p>That offer has expired</p>
                 </Message>
                 <Message positive hidden={this.state.hideMessageOk}>
-                <Message.Header>Your user registration was successful</Message.Header>
-                <p>
-                You may now log-in with the username you have chosen
-                </p>
+                <Message.Header>Contraseña cambiada con éxito</Message.Header>
+                //<p>
+               //You may now log-in with the username you have chosen
+                //</p>
                 </Message>
                 <Button color='teal' fluid size='large' /*disabled={!this.state.mostrarBotonRecuperar} onClick={this.cambiar_password}*/>
                   Cambiar contraseña&nbsp;
