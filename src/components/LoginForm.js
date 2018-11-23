@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header} from 'semantic-ui-react'
+import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header, Confirm} from 'semantic-ui-react'
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 import v from 'voca';
@@ -20,7 +20,9 @@ class LoginForm extends React.Component {
     email_recuperar: "",
     dni_recuperar: "",
     telefono_recuperar: "",
-    password_nuevo: ""
+    password_nuevo: "",
+    openAviso: false,
+    mensaje: " "
   }
 
   componentDidMount(){
@@ -59,11 +61,24 @@ class LoginForm extends React.Component {
       }else{
         console.log(response.result);
         this.showMessageOk;
+        this.setMensaje(response.result);
+        this.show;
       }
     })
   }
   
-
+  showAviso = () => {
+    this.setState({ openAviso: true })
+  }
+  setMensaje = (texto) => {
+    this.setState({ mensaje: texto });
+  }
+  handleConfirm = () => {
+    this.setState({show: false, openAviso: false })
+  }
+  handleCancel = () => {
+    this.setState({openAviso: false })
+  }
   showModal = () => {
     this.setState({ show: true });
   }
@@ -301,7 +316,7 @@ class LoginForm extends React.Component {
                 </Segment>
                 </Form>
                 </Modal>
-              
+              <Confirm open={openAviso} content={this.state.mensaje} onCancel={this.handleCancel} onConfirm={this.handleConfirm} />
       </div>
     );
   }
