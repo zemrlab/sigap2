@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header, Confirm} from 'semantic-ui-react'
+import { Button, Form, Grid, Image, Segment, Loader, Message, Divider, Header} from 'semantic-ui-react'
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 import v from 'voca';
@@ -21,11 +21,12 @@ class LoginForm extends React.Component {
     dni_recuperar: "",
     telefono_recuperar: "",
     password_nuevo: "",
-    openAviso: false,
-    mensaje: " "
+    password_confirmar_nuevo: "",
+    mensajeError: ""
   }
 
   componentDidMount(){
+    Modal.setAppElement('body');
     fetch('https://backend-estadisticas-portal.herokuapp.com//LoginController/modulos').then()
     fetch(`${process.env.REACT_APP_API_ROOT}/LoginController/modulos`)
     .then(response => response.ok ? response.json() : Promise.resolve({result: 'error'}))
@@ -39,18 +40,19 @@ class LoginForm extends React.Component {
   }
 
   
-  
-  showAviso = () => {
-    this.setState({ openAviso: true })
-  }
-  setMensaje = (texto) => {
-    this.setState({ mensaje: texto });
-  }
-  handleConfirm = () => {
-    this.setState({show: false, openAviso: false })
-  }
-  handleCancel = () => {
-    this.setState({openAviso: false })
+  clean_Modal_RecuperarContrasena = () => {
+    this.setState
+    ({ 
+      nombre_usuario_recuperar: "",
+      email_recuperar: "",
+      dni_recuperar: "",
+      telefono_recuperar: "",
+      password_nuevo: "",
+      password_confirmar_nuevo: "",
+    });
+    this.hideMessageError();
+    this.hideMessageOk();
+    
   }
   showModal = () => {
     this.setState({ show: true });
@@ -58,6 +60,7 @@ class LoginForm extends React.Component {
 
   hideModal = () => {
     this.setState({ show: false });
+    this.clean_Modal_RecuperarContrasena();
   }
   showMessageOk = () => {
     this.setState({ hideMessageOk: false });
@@ -73,7 +76,10 @@ class LoginForm extends React.Component {
   hideMessageError = () => {
     this.setState({ hideMessageError: true });
   }
-
+  setMensajeError = (tipoError) => {
+    if(tipoError===1) this.setState({mensajeError:"¡Lo sentimos no se cambió la contraseña! Revise que los datos esten completos y correctos"});
+    else if(tipoError===2) this.setState({mensajeError:"¡Contraseñas no coinciden!"});
+  }
   handleChangeModal= (event) => {
     switch(event.target.name)
     {
@@ -96,38 +102,68 @@ class LoginForm extends React.Component {
       case "password_nuevo":
       this.setState({password_nuevo: event.target.value});
       break;
+
+      case "password_confirmar_nuevo":
+      this.setState({password_confirmar_nuevo: event.target.value});
+      //this.handleBlurPassword();
+      break;
     }
     
   }
+  handleBlurPassword = () => {
+    var pass1 = this.state.password_nuevo;
+    var pass2 = this.state.password_confirmar_nuevo;
+    console.log(pass1+"/"+pass2);
+    if(pass1 === pass2)
+    {
+      this.hideMessageError();
+    }else{
+      this.setMensajeError(2);
+      this.showMessageError();
+    }
+  }
   cambiar_password = () => {
     console.log("Aqui");
-    console.log("xd"+ this.state.email_recuperar+ this.state.dni_recuperar+this.state.telefono_recuperar+this.state.password_nuevo);
-    //fetch('https://backend-estadisticas-portal.herokuapp.com//RecuperacionController/').then()
-    fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController`, {
-      method: 'POST',
-      body: JSON.stringify({
-        "nombre_usuario": this.state.nombre_usuario_recuperar,
-        "email": this.state.email_recuperar, 
-        "dni": this.state.dni_recuperar,
-        "telefono": this.state.telefono_recuperar,
-        "pass": this.state.password_nuevo
-      }),
-      headers: { 
-        'Content-Type': 'application/json' 
-      }
-    })
-    .then(response => response.ok ? response.json() : Promise.reject({_error: 'Hubo un error'}))
-    .then(response => {
-      if(response.return === 'failure' || response.result === 'error'){
-        this.showMessageError();
-        return Promise.reject({_error: 'Datos incorrectos'});
-      }else{
-        console.log(response.result);
-        this.showMessageOk();
-        //this.setMensaje(response.result);
-        //this.showAviso();
-      }
-    })
+    var pass1 = this.state.password_nuevo;
+    var pass2 = this.state.password_confirmar_nuevo;
+    this.hideMessageError();
+    this.hideMessageOk();
+    console.log(this.state.password_nuevo);
+    console.log(this.state.password_confirmar_nuevo);
+    if(pass1 === pass2)
+    {
+      console.log("entro");
+      fetch(`${process.env.REACT_APP_API_ROOT}/RecuperacionController`, {
+        method: 'POST',
+        body: JSON.stringify({
+          "nombre_usuario": this.state.nombre_usuario_recuperar,
+          "email": this.state.email_recuperar, 
+          "dni": this.state.dni_recuperar,
+          "telefono": this.state.telefono_recuperar,
+          "pass": this.state.password_nuevo
+        }),
+        headers: { 
+          'Content-Type': 'application/json' 
+        }
+      })
+      .then(response => response.ok ? response.json() : Promise.reject({_error: 'Hubo un error'}))
+      .then(response => {
+        if(response.return === 'failure' || response.result === 'error'){
+          this.setMensajeError(1);
+          this.showMessageError();
+          return Promise.reject({_error: 'Datos incorrectos'});
+        }else{
+          console.log(response.result);
+          this.showMessageOk();
+          //this.setMensaje(response.result);
+          //this.showAviso();
+        }
+      })
+    }else{
+      console.log("entro xq");
+      this.setMensajeError(2);
+      this.showMessageError();
+    }
   }
   handleBlurModal= (event) => {
     this.validationRecuperar();    
@@ -291,15 +327,26 @@ class LoginForm extends React.Component {
                   iconPosition='left'
                   placeholder='Nueva contraseña'
                   name="password_nuevo"
-                  type="text"
+                  type='password'
                   value={this.state.password_nuevo}
                   onChange={this.handleChangeModal}
-                  //onBlur={handleBlur}
+                  onKeyUp={this.handleBlurPassword}
+                  //error={touched['email_recuperar'] && !!errors['email_recuperar']}
+                /> 
+                <Form.Input
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder='Confirmar nueva contraseña'
+                  name="password_confirmar_nuevo"
+                  type='password'
+                  value={this.state.password_confirmar_nuevo}
+                  onChange={this.handleChangeModal}
+                  onKeyUp={this.handleBlurPassword}
                   //error={touched['email_recuperar'] && !!errors['email_recuperar']}
                 /> 
                 <Message negative hidden={this.state.hideMessageError}>
-                  <Message.Header>We're sorry we can't apply that discount</Message.Header>
-                  <p>That offer has expired</p>
+                  <Message.Header>{this.state.mensajeError}</Message.Header>
                 </Message>
                 <Message positive hidden={this.state.hideMessageOk}>
                 <Message.Header>Contraseña cambiada con éxito</Message.Header>
@@ -316,9 +363,6 @@ class LoginForm extends React.Component {
                 </Segment>
                 </Form>
                 </Modal>
-              <div>
-                  <Confirm open={this.state.openAviso} content={this.state.mensaje} onCancel={this.handleCancel} onConfirm={this.handleConfirm} />
-              </div>
           </div>
     );
   }
