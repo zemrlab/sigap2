@@ -81,6 +81,9 @@ class LoginForm extends React.Component {
     else if(tipoError===2) this.setState({mensajeError:"¡Contraseñas no coinciden!"});
   }
   handleChangeModal= (event) => {
+    if(this.state.mensajeError === "¡Lo sentimos no se cambió la contraseña! Revise que los datos esten completos y correctos")
+      this.hideMessageError();
+      
     switch(event.target.name)
     {
       case "nombre_usuario_recuperar":
