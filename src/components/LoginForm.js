@@ -27,7 +27,8 @@ class LoginForm extends React.Component {
 
   componentDidMount(){
     Modal.setAppElement('body');
-    fetch('https://backend-estadisticas-portal.herokuapp.com//LoginController/modulos').then()
+    //fetch('https://backend-estadisticas-portal.herokuapp.com//LoginController/modulos').then()
+    fetch('https://sigap-back-estadisticas.herokuapp.com//LoginController/modulos').then()    
     fetch(`${process.env.REACT_APP_API_ROOT}/LoginController/modulos`)
     .then(response => response.ok ? response.json() : Promise.resolve({result: 'error'}))
     .then(response => this.setState({
